@@ -1,0 +1,13 @@
+[[api-request-uesr-info]]
+=== AccountId를 통한 User 정보 요청 API
+AccountId를 이용해 User 정보를 요청합니다.
+
+====== 요청 형식
+include::{snippets}/request-user-info/http-request.adoc[]
+====== 응답 형식
+include::{snippets}/request-user-info/http-response.adoc[]
+include::{snippets}/request-user-info/response-fields.adoc[]
+====== Response Body
+include::{snippets}/request-user-info/response-body.adoc[]
+====== Try with curl
+include::{snippets}/request-user-info/curl-request.adoc[]
