@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService{
      * AccountId를 통해 유저 정보를 가져온다
      */
     @Override
+    @Transactional
     public ResponseUser.UserInfo getUserInfoByAccountId(String accountId) {
         Optional<User> optionalUser = userRepository.findByAccountId(accountId);
         User user = (User) optionalUser.orElseThrow(() -> new InvalidAccountIdException("Account Id 가 유효하지 않습니다"));
