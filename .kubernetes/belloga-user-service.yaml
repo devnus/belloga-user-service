@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+    service: user-service
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: user-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: belloga-user-service
+  labels:
+    account: user-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-v1
+  labels:
+    app: user-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: user-service
+        version: v1
+    spec:
+      serviceAccountName: belloga-user-service
+      containers:
+        - name: user-service
+          image: 023778162658.dkr.ecr.ap-northeast-2.amazonaws.com/belloga-user-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: local
