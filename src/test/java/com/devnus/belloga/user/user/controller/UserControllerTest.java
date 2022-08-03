@@ -1,7 +1,5 @@
 package com.devnus.belloga.user.user.controller;
 
-import com.devnus.belloga.user.common.aop.annotation.UserRole;
-import com.devnus.belloga.user.user.domain.EnterpriseUser;
 import com.devnus.belloga.user.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -42,17 +40,7 @@ class UserControllerTest {
     void requestUserInfoTest() throws Exception {
 
         //given
-        String accountId = "test-accountId";
-        EnterpriseUser enterpriseUser = EnterpriseUser.builder()
-                .accountId(accountId)
-                .userRole(UserRole.ENTERPRISE)
-                .organization("test-organization")
-                .phoneNumber("01000000000")
-                .name("test-name")
-                .email("test@test.com")
-                .id("test-user-id")
-                .build();
-        userRepository.save(enterpriseUser);
+        String accountId = "account-id";
 
         //when
         mockMvc.perform(RestDocumentationRequestBuilders.get("/api/user/v1/users/accounts/{accountId}", accountId)
@@ -61,7 +49,7 @@ class UserControllerTest {
 
                 //then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.response.userId").value("test-user-id"))
+                .andExpect(jsonPath("$.response.userId").value("user-id"))
                 .andExpect(jsonPath("$.response.userRole").value("ENTERPRISE"))
                 .andDo(print())
 
