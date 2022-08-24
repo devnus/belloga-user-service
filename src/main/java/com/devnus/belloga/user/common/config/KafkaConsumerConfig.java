@@ -48,7 +48,11 @@ public class KafkaConsumerConfig {
 
     @Bean
     ConsumerFactory<String, EventAccount.RegisterAccountEnterprise> eventAccountRegisterAccountEnterpriseFactory(){
-        return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), new JsonDeserializer<>(EventAccount.RegisterAccountEnterprise.class));
+        JsonDeserializer<EventAccount.RegisterAccountEnterprise> deserializer = new JsonDeserializer<>(EventAccount.RegisterAccountEnterprise.class);
+        deserializer.setRemoveTypeHeaders(false);
+        deserializer.addTrustedPackages("*");
+        deserializer.setUseTypeMapperForKey(true);x
+        return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), deserializer);
     }
 
     @Bean
