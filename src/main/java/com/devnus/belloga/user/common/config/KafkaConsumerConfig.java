@@ -1,5 +1,6 @@
 package com.devnus.belloga.user.common.config;
 
+import com.devnus.belloga.user.user.dto.EventAccount;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,15 +24,19 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.consumer.enable-auto-commit}")
     private boolean AUTO_COMMIT;
 
-    @Bean
-    ConsumerFactory<String,Object> consumerFactory(){
+    private Map<String, Object> configProps() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class); //카프카에서 받은 키 역 직렬화
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class); //카프카에서 받은 값 역 직렬화
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, AUTO_OFFSET_RESET);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, AUTO_COMMIT);
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(Object.class));
+        return props;
+    }
+
+    @Bean
+    ConsumerFactory<String,Object> consumerFactory(){
+        return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), new JsonDeserializer<>(Object.class));
     }
 
     @Bean
@@ -40,5 +45,19 @@ public class KafkaConsumerConfig {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
+
+    @Bean
+    ConsumerFactory<String, EventAccount.RegisterAccountEnterprise> eventAccountRegisterAccountEnterpriseFactory(){
+        return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), new JsonDeserializer<>(EventAccount.RegisterAccountEnterprise.class));
+    }
+
+    @Bean
+    ConcurrentKafkaListenerContainerFactory<String, EventAccount.RegisterAccountEnterprise> eventAccountRegisterAccountEnterpriseListener(){
+        ConcurrentKafkaListenerContainerFactory<String, EventAccount.RegisterAccountEnterprise> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(eventAccountRegisterAccountEnterpriseFactory());
+        return factory;
+    }
+
+
 
 }
