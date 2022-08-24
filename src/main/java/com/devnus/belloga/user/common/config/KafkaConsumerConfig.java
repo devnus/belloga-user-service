@@ -51,7 +51,7 @@ public class KafkaConsumerConfig {
         JsonDeserializer<EventAccount.RegisterAccountEnterprise> deserializer = new JsonDeserializer<>(EventAccount.RegisterAccountEnterprise.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
-        deserializer.setUseTypeMapperForKey(true);x
+        deserializer.setUseTypeMapperForKey(true);
         return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), deserializer);
     }
 
