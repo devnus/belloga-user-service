@@ -1,14 +1,12 @@
 package com.devnus.belloga.user.user.controller;
 
 import com.devnus.belloga.user.common.dto.CommonResponse;
+import com.devnus.belloga.user.user.dto.RequestUser;
 import com.devnus.belloga.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 유저 정보 관련 컨트롤러
@@ -28,6 +26,20 @@ public class UserController {
         CommonResponse response = CommonResponse.builder()
                 .success(true)
                 .response(userService.getUserInfoByAccountId(accountId))
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * Auth 마이크로서비스에서 Oauth 회원가입을 진행할 때 동기 통신하여 User회원 정보 저장
+     */
+    @PostMapping("/v1/user")
+    public ResponseEntity<CommonResponse> registerUser(@RequestBody RequestUser.RegisterOauthUser request){
+
+        CommonResponse response = CommonResponse.builder()
+                .success(true)
+                .response(userService.saveUserLabeler(request))
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -1,0 +1,15 @@
+[[api-register-user]]
+=== User 정보 저장 API
+Oauth 회원가입 시, 동기 통신으로 User에 사용자 정보를 저장한다.
+클라이언트 쪽에서 사용하지는 않음. 동기 통신에서만 사용
+
+====== 요청 형식
+include::{snippets}/register-user/http-request.adoc[]
+include::{snippets}/register-user/request-fields.adoc[]
+====== 응답 형식
+include::{snippets}/register-user/http-response.adoc[]
+include::{snippets}/register-user/response-fields.adoc[]
+====== Response Body
+include::{snippets}/register-user/response-body.adoc[]
+====== Try with curl
+include::{snippets}/register-user/curl-request.adoc[]

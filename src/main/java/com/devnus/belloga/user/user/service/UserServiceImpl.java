@@ -3,8 +3,10 @@ package com.devnus.belloga.user.user.service;
 import com.devnus.belloga.user.common.exception.error.InvalidAccountIdException;
 import com.devnus.belloga.user.common.util.SecurityUtil;
 import com.devnus.belloga.user.user.domain.EnterpriseUser;
+import com.devnus.belloga.user.user.domain.LabelerUser;
 import com.devnus.belloga.user.user.domain.User;
 import com.devnus.belloga.user.user.dto.EventAccount;
+import com.devnus.belloga.user.user.dto.RequestUser;
 import com.devnus.belloga.user.user.dto.ResponseUser;
 import com.devnus.belloga.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +49,29 @@ public class UserServiceImpl implements UserService{
     public ResponseUser.UserInfo getUserInfoByAccountId(String accountId) {
         Optional<User> optionalUser = userRepository.findByAccountId(accountId);
         User user = (User) optionalUser.orElseThrow(() -> new InvalidAccountIdException("Account Id 가 유효하지 않습니다"));
+
+        return ResponseUser.UserInfo.builder()
+                .userId(user.getId())
+                .userRole(user.getUserRole())
+                .build();
+    }
+
+    /**
+     * Oauth 회원가입시 동기로 받는 라벨러 사용자의 정보를 저장한다
+     */
+    @Override
+    @Transactional
+    public ResponseUser.UserInfo saveUserLabeler(RequestUser.RegisterOauthUser request){
+
+        User user = (User) userRepository.save(LabelerUser.builder()
+                .id(SecurityUtil.encryptSHA256(request.getAccountId()))
+                .accountId(request.getAccountId())
+                .userRole(request.getUserRole())
+                .email(request.getEmail())
+                .name(request.getName())
+                .phoneNumber(request.getPhoneNumber())
+                .birthYear(request.getBirthYear())
+                .build());
 
         return ResponseUser.UserInfo.builder()
                 .userId(user.getId())
