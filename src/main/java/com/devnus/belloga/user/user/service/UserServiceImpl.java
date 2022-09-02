@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     @Transactional
-    public ResponseUser.UserInfo saveUserLabeler(RequestUser.RegisterOauthUser request){
+    public ResponseUser.UserInfo saveOauthUser(RequestUser.RegisterOauthUser request){
 
         User user = (User) userRepository.save(LabelerUser.builder()
                 .id(SecurityUtil.encryptSHA256(request.getAccountId()))

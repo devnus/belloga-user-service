@@ -32,14 +32,14 @@ public class UserController {
     }
 
     /**
-     * Auth 마이크로서비스에서 Oauth 회원가입을 진행할 때 동기 통신하여 User회원 정보 저장
+     * Auth 마이크로서비스에서 Oauth 회원가입을 진행할 때 동기 통신하여 Oauth 사용자 정보 저장
      */
     @PostMapping("/v1/user")
-    public ResponseEntity<CommonResponse> registerUser(@RequestBody RequestUser.RegisterOauthUser request){
+    public ResponseEntity<CommonResponse> registerOauthUser(@RequestBody RequestUser.RegisterOauthUser request){
 
         CommonResponse response = CommonResponse.builder()
                 .success(true)
-                .response(userService.saveUserLabeler(request))
+                .response(userService.saveOauthUser(request))
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);

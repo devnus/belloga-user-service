@@ -74,7 +74,7 @@ class UserControllerTest {
     }
 
     @Test
-    void registerUserTest() throws Exception {
+    void registerOauthUserTest() throws Exception {
         //give
         Map<String, String> input = new HashMap<>();
         input.put("accountId", "test2_accountId");
