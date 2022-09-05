@@ -1,11 +1,12 @@
 package com.devnus.belloga.user.user.service;
 
 import com.devnus.belloga.user.user.dto.EventAccount;
-import com.devnus.belloga.user.user.dto.RequestUser;
 import com.devnus.belloga.user.user.dto.ResponseUser;
 
 public interface UserService {
-    boolean saveUserEnterprise(EventAccount.RegisterAccountEnterprise event);
-    ResponseUser.UserInfo getUserInfoByAccountId(String AccountId);
-    ResponseUser.UserInfo saveOauthUser(RequestUser.RegisterOauthUser request);
+    boolean saveEnterprise(EventAccount.RegisterEnterprise event);
+    boolean saveLabeler(EventAccount.RegisterLabeler event);
+
+    ResponseUser.EnterpriseInfo getEnterpriseInfo (String accountId);
+    ResponseUser.LabelerInfo getLabelerInfo (String accountId);
 }

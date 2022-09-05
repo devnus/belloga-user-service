@@ -47,8 +47,8 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    ConsumerFactory<String, EventAccount.RegisterAccountEnterprise> eventAccountRegisterAccountEnterpriseFactory(){
-        JsonDeserializer<EventAccount.RegisterAccountEnterprise> deserializer = new JsonDeserializer<>(EventAccount.RegisterAccountEnterprise.class);
+    ConsumerFactory<String, EventAccount.RegisterEnterprise> eventRegisterEnterpriseFactory(){
+        JsonDeserializer<EventAccount.RegisterEnterprise> deserializer = new JsonDeserializer<>(EventAccount.RegisterEnterprise.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
         deserializer.setUseTypeMapperForKey(true);
@@ -56,12 +56,26 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    ConcurrentKafkaListenerContainerFactory<String, EventAccount.RegisterAccountEnterprise> eventAccountRegisterAccountEnterpriseListener(){
-        ConcurrentKafkaListenerContainerFactory<String, EventAccount.RegisterAccountEnterprise> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(eventAccountRegisterAccountEnterpriseFactory());
+    ConcurrentKafkaListenerContainerFactory<String, EventAccount.RegisterEnterprise> eventRegisterEnterpriseListener(){
+        ConcurrentKafkaListenerContainerFactory<String, EventAccount.RegisterEnterprise> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(eventRegisterEnterpriseFactory());
         return factory;
     }
 
+    @Bean
+    ConsumerFactory<String, EventAccount.RegisterLabeler> eventRegisterLabelerFactory(){
+        JsonDeserializer<EventAccount.RegisterLabeler> deserializer = new JsonDeserializer<>(EventAccount.RegisterLabeler.class);
+        deserializer.setRemoveTypeHeaders(false);
+        deserializer.addTrustedPackages("*");
+        deserializer.setUseTypeMapperForKey(true);
+        return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), deserializer);
+    }
 
+    @Bean
+    ConcurrentKafkaListenerContainerFactory<String, EventAccount.RegisterLabeler> eventRegisterLabelerListener(){
+        ConcurrentKafkaListenerContainerFactory<String, EventAccount.RegisterLabeler> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(eventRegisterLabelerFactory());
+        return factory;
+    }
 
 }

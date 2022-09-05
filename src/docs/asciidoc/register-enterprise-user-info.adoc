@@ -1,0 +1,13 @@
+[[api-request-enterprise-user-info]]
+=== 기업 사용자 정보 요청 API
+accountId를 통해 기업 사용자 정보를 가져온다
+
+====== 요청 형식
+include::{snippets}/request-enterprise-user-info/http-request.adoc[]
+====== 응답 형식
+include::{snippets}/request-enterprise-user-info/http-response.adoc[]
+include::{snippets}/request-enterprise-user-info/response-fields.adoc[]
+====== Response Body
+include::{snippets}/request-enterprise-user-info/response-body.adoc[]
+====== Try with curl
+include::{snippets}/request-enterprise-user-info/curl-request.adoc[]

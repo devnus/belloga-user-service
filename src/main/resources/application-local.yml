@@ -35,7 +35,8 @@ spring:
 app:
   topic:
     account:
-      register-account-enterprise: register-account-enterprise
+      register-enterprise: register-enterprise
+      register-labeler: register-labeler
 
   web-client:
     base-url: http://api.belloga.com # domain name

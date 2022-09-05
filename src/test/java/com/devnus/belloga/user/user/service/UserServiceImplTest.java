@@ -1,22 +1,23 @@
 package com.devnus.belloga.user.user.service;
 
-import com.devnus.belloga.user.common.aop.annotation.UserRole;
 import com.devnus.belloga.user.user.dto.EventAccount;
 import com.devnus.belloga.user.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
+@DataJpaTest
 class UserServiceImplTest {
 
     UserServiceImpl userService;
 
-    @Mock
+    @Autowired
     UserRepository userRepository;
 
     @BeforeEach
@@ -31,11 +32,10 @@ class UserServiceImplTest {
     }
 
     @Test
-    void saveUserEnterpriseTest() {
+    void saveEnterpriseTest() {
         //given
-        EventAccount.RegisterAccountEnterprise event = EventAccount.RegisterAccountEnterprise.builder()
+        EventAccount.RegisterEnterprise event = EventAccount.RegisterEnterprise.builder()
                 .phoneNumber("01000000000")
-                .userRole(UserRole.ENTERPRISE)
                 .organization("sample-organization")
                 .name("sample-name")
                 .email("sample@sample.sample")
@@ -43,7 +43,25 @@ class UserServiceImplTest {
                 .build();
 
         //when
-        boolean result = userService.saveUserEnterprise(event);
+        boolean result = userService.saveEnterprise(event);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(true);
+    }
+
+    @Test
+    void saveLabelerTest() {
+        //given
+        EventAccount.RegisterLabeler event = EventAccount.RegisterLabeler.builder()
+                .phoneNumber("01000000000")
+                .name("sample-name")
+                .email("sample@sample.sample")
+                .accountId("sample-accountId")
+                .birthYear("2000")
+                .build();
+
+        //when
+        boolean result = userService.saveLabeler(event);
 
         //then
         Assertions.assertThat(result).isEqualTo(true);

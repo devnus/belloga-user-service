@@ -15,10 +15,17 @@ public class UserConsumer {
     private final UserService userService;
     /**
      * 기업 사용자 custom 회원가입시 consume
-     * group은 협의 후 결정
      */
-    @KafkaListener(topics = "register-account-enterprise", groupId = "register-account-enterprise-1", containerFactory = "eventAccountRegisterAccountEnterpriseListener")
-    protected boolean registerCustomAccountEnterprise(EventAccount.RegisterAccountEnterprise event) throws IOException {
-        return userService.saveUserEnterprise(event);
+    @KafkaListener(topics = "register-enterprise", groupId = "register-enterprise-1", containerFactory = "eventRegisterEnterpriseListener")
+    protected boolean registerEnterprise(EventAccount.RegisterEnterprise event) throws IOException {
+        return userService.saveEnterprise(event);
+    }
+
+    /**
+     * 일반 사용자 custom 회원가입시 consume
+     */
+    @KafkaListener(topics = "register-labeler", groupId = "register-labeler-1", containerFactory = "eventRegisterLabelerListener")
+    protected boolean registerLabeler(EventAccount.RegisterLabeler event) throws IOException {
+        return userService.saveLabeler(event);
     }
 }

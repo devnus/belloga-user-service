@@ -12,9 +12,6 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -39,24 +36,25 @@ class UserControllerTest {
     private UserRepository userRepository;
 
     @Test
-    void requestUserInfoTest() throws Exception {
-
+    void requestEnterpriseUserInfoTest() throws Exception {
         //given
-        String accountId = "account-id";
+        String accountId = "enterprise-account-id";
 
         //when
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/user/v1/users/accounts/{accountId}", accountId)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/user/v1/enterprise/{accountId}", accountId)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
 
                 //then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.response.userId").value("user-id"))
-                .andExpect(jsonPath("$.response.userRole").value("ENTERPRISE"))
+                .andExpect(jsonPath("$.response.phoneNumber").value("01000000001"))
+                .andExpect(jsonPath("$.response.email").value("devnus1@devnus.com"))
+                .andExpect(jsonPath("$.response.name").value("devnus1_name"))
+                .andExpect(jsonPath("$.response.organization").value("devnus_organization"))
                 .andDo(print())
 
                 //docs
-                .andDo(document("request-user-info",
+                .andDo(document("request-enterprise-user-info",
                         pathParameters(
                                 parameterWithName("accountId").description("계정 Id (AccountId)")
                         ),
@@ -64,55 +62,56 @@ class UserControllerTest {
                                 fieldWithPath("id").description("logging을 위한 api response 고유 ID"),
                                 fieldWithPath("dateTime").description("response time"),
                                 fieldWithPath("success").description("정상 응답 여부"),
-                                fieldWithPath("response.userId").description("요청한 유저 아이디"),
-                                fieldWithPath("response.userRole").description("요청한 유저 역할"),
+                                fieldWithPath("response.phoneNumber").description("요청한 유저 번호"),
+                                fieldWithPath("response.email").description("요청한 유저 이메일"),
+                                fieldWithPath("response.name").description("요청한 유저 이름"),
+                                fieldWithPath("response.organization").description("요청한 유저 소속 회사"),
                                 fieldWithPath("error").description("error 발생 시 에러 정보")
                         )
                 ))
-                .andExpect(jsonPath("$.response.userId", is(notNullValue())))
-                .andExpect(jsonPath("$.response.userRole", is(notNullValue())));
+                .andExpect(jsonPath("$.response.phoneNumber", is(notNullValue())))
+                .andExpect(jsonPath("$.response.email", is(notNullValue())))
+                .andExpect(jsonPath("$.response.name", is(notNullValue())))
+                .andExpect(jsonPath("$.response.organization", is(notNullValue())));
     }
 
     @Test
-    void registerOauthUserTest() throws Exception {
-        //give
-        Map<String, String> input = new HashMap<>();
-        input.put("accountId", "test2_accountId");
-        input.put("userRole", "LABELER");
-        input.put("email", "test2@test.com");
-        input.put("name", "test2_name");
-        input.put("phoneNumber","01000001234");
-        input.put("birthYear","2000");
+    void requestLabelerUserInfoTest() throws Exception {
+        //given
+        String accountId = "labeler-account-id";
 
         //when
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/user/v1/user")
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/user/v1/labelers/{accountId}", accountId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(input))
                 )
+
                 //then
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.response.phoneNumber").value("01000000002"))
+                .andExpect(jsonPath("$.response.email").value("devnus2@devnus.com"))
+                .andExpect(jsonPath("$.response.name").value("devnus2_name"))
+                .andExpect(jsonPath("$.response.birthYear").value("2000"))
                 .andDo(print())
 
                 //docs
-                .andDo(document("register-user",
-                        requestFields(
-                                fieldWithPath("accountId").description("회원가입 하는 사용자의 accountId"),
-                                fieldWithPath("userRole").description("회원가입 하는 사용자의 userRole"),
-                                fieldWithPath("email").description("회원가입 하는 사용자의 email"),
-                                fieldWithPath("name").description("회원가입 하는 사용자의 name"),
-                                fieldWithPath("phoneNumber").description("회원가입 하는 사용자의 phoneNumber"),
-                                fieldWithPath("birthYear").description("회원가입 하는 사용자의 birthYear")
+                .andDo(document("request-labeler-user-info",
+                        pathParameters(
+                                parameterWithName("accountId").description("계정 Id (AccountId)")
                         ),
                         responseFields(
                                 fieldWithPath("id").description("logging을 위한 api response 고유 ID"),
                                 fieldWithPath("dateTime").description("response time"),
                                 fieldWithPath("success").description("정상 응답 여부"),
-                                fieldWithPath("response.userRole").description("회원가입 성공한 사용자의 역할"),
-                                fieldWithPath("response.userId").description("회원가입 성공한 사용자의 UserId"),
+                                fieldWithPath("response.phoneNumber").description("요청한 유저 번호"),
+                                fieldWithPath("response.email").description("요청한 유저 이메일"),
+                                fieldWithPath("response.name").description("요청한 유저 이름"),
+                                fieldWithPath("response.birthYear").description("요청한 유저 출생년도"),
                                 fieldWithPath("error").description("error 발생 시 에러 정보")
                         )
                 ))
-                .andExpect(jsonPath("$.response.userId", is(notNullValue())))
-                .andExpect(jsonPath("$.response.userRole", is(notNullValue())));
+                .andExpect(jsonPath("$.response.phoneNumber", is(notNullValue())))
+                .andExpect(jsonPath("$.response.email", is(notNullValue())))
+                .andExpect(jsonPath("$.response.name", is(notNullValue())))
+                .andExpect(jsonPath("$.response.birthYear", is(notNullValue())));
     }
 }

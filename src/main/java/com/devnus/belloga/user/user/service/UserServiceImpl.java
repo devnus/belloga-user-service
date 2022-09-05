@@ -6,7 +6,6 @@ import com.devnus.belloga.user.user.domain.EnterpriseUser;
 import com.devnus.belloga.user.user.domain.LabelerUser;
 import com.devnus.belloga.user.user.domain.User;
 import com.devnus.belloga.user.user.dto.EventAccount;
-import com.devnus.belloga.user.user.dto.RequestUser;
 import com.devnus.belloga.user.user.dto.ResponseUser;
 import com.devnus.belloga.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +25,11 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     @Transactional
-    public boolean saveUserEnterprise(EventAccount.RegisterAccountEnterprise event) {
+    public boolean saveEnterprise(EventAccount.RegisterEnterprise event) {
 
         userRepository.save(EnterpriseUser.builder()
                 .id(SecurityUtil.encryptSHA256(event.getAccountId()))
                 .accountId(event.getAccountId())
-                .userRole(event.getUserRole())
                 .email(event.getEmail())
                 .name(event.getName())
                 .organization(event.getOrganization())
@@ -42,40 +40,51 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
-     * AccountId를 통해 유저 정보를 가져온다
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public ResponseUser.UserInfo getUserInfoByAccountId(String accountId) {
-        Optional<User> optionalUser = userRepository.findByAccountId(accountId);
-        User user = (User) optionalUser.orElseThrow(() -> new InvalidAccountIdException("Account Id 가 유효하지 않습니다"));
-
-        return ResponseUser.UserInfo.builder()
-                .userId(user.getId())
-                .userRole(user.getUserRole())
-                .build();
-    }
-
-    /**
-     * Oauth 회원가입시 동기로 받는 라벨러 사용자의 정보를 저장한다
+     * 일반사용자 회원가입시 비동기로 받는 일반 사용자의 정보를 저장한다
      */
     @Override
     @Transactional
-    public ResponseUser.UserInfo saveOauthUser(RequestUser.RegisterOauthUser request){
+    public boolean saveLabeler(EventAccount.RegisterLabeler event) {
 
-        User user = (User) userRepository.save(LabelerUser.builder()
-                .id(SecurityUtil.encryptSHA256(request.getAccountId()))
-                .accountId(request.getAccountId())
-                .userRole(request.getUserRole())
-                .email(request.getEmail())
-                .name(request.getName())
-                .phoneNumber(request.getPhoneNumber())
-                .birthYear(request.getBirthYear())
+        userRepository.save(LabelerUser.builder()
+                .id(SecurityUtil.encryptSHA256(event.getAccountId()))
+                .accountId(event.getAccountId())
+                .email(event.getEmail())
+                .name(event.getName())
+                .phoneNumber(event.getPhoneNumber())
+                .birthYear(event.getBirthYear())
                 .build());
 
-        return ResponseUser.UserInfo.builder()
-                .userId(user.getId())
-                .userRole(user.getUserRole())
+        return true;
+    }
+
+    @Override
+    public ResponseUser.EnterpriseInfo getEnterpriseInfo (String accountId){
+
+        //사용자 정보 확인
+        Optional<User> user = userRepository.findByAccountId(accountId);
+        EnterpriseUser enterpriseUser = (EnterpriseUser) user.orElseThrow(() -> new InvalidAccountIdException());
+
+        return ResponseUser.EnterpriseInfo.builder()
+                .email(enterpriseUser.getEmail())
+                .name(enterpriseUser.getName())
+                .organization(enterpriseUser.getOrganization())
+                .phoneNumber(enterpriseUser.getPhoneNumber())
+                .build();
+    }
+
+    @Override
+    public ResponseUser.LabelerInfo getLabelerInfo (String accountId){
+
+        //사용자 정보 확인
+        Optional<User> user = userRepository.findByAccountId(accountId);
+        LabelerUser labelerUser = (LabelerUser) user.orElseThrow(() -> new InvalidAccountIdException());
+
+        return ResponseUser.LabelerInfo.builder()
+                .email(labelerUser.getEmail())
+                .name(labelerUser.getName())
+                .phoneNumber(labelerUser.getPhoneNumber())
+                .birthYear(labelerUser.getBirthYear())
                 .build();
     }
 }

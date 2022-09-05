@@ -1,6 +1,5 @@
 package com.devnus.belloga.user.user.dto;
 
-import com.devnus.belloga.user.common.aop.annotation.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +10,23 @@ public class EventAccount {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class RegisterAccountEnterprise {
+    public static class RegisterEnterprise {
         private String accountId;
         private String email;
         private String name;
         private String phoneNumber;
         private String organization;;
-        private UserRole userRole;
+    }
+
+    @Builder
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RegisterLabeler {
+        private String accountId;
+        private String email;
+        private String name;
+        private String phoneNumber;
+        private String birthYear;
     }
 }

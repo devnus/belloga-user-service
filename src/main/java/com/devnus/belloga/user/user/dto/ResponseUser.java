@@ -1,7 +1,5 @@
 package com.devnus.belloga.user.user.dto;
 
-import com.devnus.belloga.user.common.aop.annotation.UserRole;
-import com.devnus.belloga.user.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +10,21 @@ public class ResponseUser {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UserInfo {
-        private String userId;
-        private UserRole userRole;
+    public static class LabelerInfo {
+        private String phoneNumber;
+        private String email;
+        private String name;
+        private String birthYear;
+    }
+
+    @Builder
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class EnterpriseInfo {
+        private String phoneNumber;
+        private String email;
+        private String name;
+        private String organization;
     }
 }

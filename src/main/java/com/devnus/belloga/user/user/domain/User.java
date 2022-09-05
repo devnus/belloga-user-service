@@ -1,6 +1,5 @@
 package com.devnus.belloga.user.user.domain;
 
-import com.devnus.belloga.user.common.aop.annotation.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +22,4 @@ public abstract class User {
 
     @Column(name = "account_id")
     private String accountId;
-
-    @Column(name = "user_role")
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
 }
