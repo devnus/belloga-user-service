@@ -2,6 +2,8 @@
 CREATE TABLE users (
     user_id VARCHAR(255) NOT NULL PRIMARY KEY,
     account_id VARCHAR(255) NOT NULL,
+    created_date TIMESTAMP,
+    last_modified_date TIMESTAMP,
     dtype VARCHAR(255) NOT NULL
 );
 

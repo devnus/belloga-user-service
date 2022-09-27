@@ -1,5 +1,6 @@
 package com.devnus.belloga.user.user.domain;
 
+import com.devnus.belloga.user.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @SuperBuilder
 @Getter
-public abstract class User {
+public abstract class User extends BaseTimeEntity {
     @Id
     @Column(name = "user_id")
     private String id;
