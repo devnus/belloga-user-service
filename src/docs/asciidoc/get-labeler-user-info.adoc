@@ -1,0 +1,13 @@
+[[api-get-labeler-user-info]]
+=== 라벨러 사용자 자신의 정보 조회 API
+라벨러 사용자가 자신의 정보를 가져온다.
+
+====== 요청 형식
+include::{snippets}/get-labeler-user-info/http-request.adoc[]
+====== 응답 형식
+include::{snippets}/get-labeler-user-info/http-response.adoc[]
+include::{snippets}/get-labeler-user-info/response-fields.adoc[]
+====== Response Body
+include::{snippets}/get-labeler-user-info/response-body.adoc[]
+====== Try with curl
+include::{snippets}/get-labeler-user-info/curl-request.adoc[]

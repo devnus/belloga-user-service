@@ -13,3 +13,5 @@ API 명세서 index.html이다.
 
 include::request-labeler-user-info.adoc[]
 include::register-enterprise-user-info.adoc[]
+include::get-enterprise-user-info.adoc[]
+include::get-labeler-user-info.adoc[]
