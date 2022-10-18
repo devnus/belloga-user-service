@@ -29,4 +29,21 @@ public class EventAccount {
         private String phoneNumber;
         private String birthYear;
     }
+
+    @Builder
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RegisterEnterpriseSaga {
+        private String accountId;
+        private boolean isSuccess;
+    }
+    @Builder
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RegisterLabelerSaga {
+        private String accountId;
+        private boolean isSuccess;
+    }
 }

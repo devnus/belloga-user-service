@@ -38,6 +38,8 @@ app:
     account:
       register-enterprise: register-enterprise
       register-labeler: register-labeler
+      register-enterprise-saga: register-enterprise-saga
+      register-labeler-saga: register-labeler-saga
 
   web-client:
     base-url: http://api.belloga.com # domain name

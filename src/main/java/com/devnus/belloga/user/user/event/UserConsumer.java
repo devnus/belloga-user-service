@@ -11,21 +11,35 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class UserConsumer {
-
+    private final UserProducer userProducer;
     private final UserService userService;
     /**
      * 기업 사용자 custom 회원가입시 consume
+     * 컨슘 결과를 사가 패턴으로 보낸다.
      */
     @KafkaListener(topics = "register-enterprise", groupId = "register-enterprise-1", containerFactory = "eventRegisterEnterpriseListener")
-    protected boolean registerEnterprise(EventAccount.RegisterEnterprise event) throws IOException {
-        return userService.saveEnterprise(event);
+    protected void registerEnterprise(EventAccount.RegisterEnterprise event) throws IOException {
+        try {
+            if(userService.saveEnterprise(event)) {
+                userProducer.sendRegisterEnterpriseSagaResult(event.getAccountId(), true);
+            }
+        } catch (Exception e) {
+            userProducer.sendRegisterEnterpriseSagaResult(event.getAccountId(), false);
+        }
     }
 
     /**
      * 일반 사용자 custom 회원가입시 consume
+     * 컨슘 결과를 사가 패턴으로 보낸다.
      */
     @KafkaListener(topics = "register-labeler", groupId = "register-labeler-1", containerFactory = "eventRegisterLabelerListener")
-    protected boolean registerLabeler(EventAccount.RegisterLabeler event) throws IOException {
-        return userService.saveLabeler(event);
+    protected void registerLabeler(EventAccount.RegisterLabeler event) throws IOException {
+        try {
+            if(userService.saveLabeler(event)) {
+                userProducer.sendRegisterLabelerSagaResult(event.getAccountId(), true);
+            }
+        } catch (Exception e) {
+            userProducer.sendRegisterLabelerSagaResult(event.getAccountId(), false);
+        }
     }
 }
