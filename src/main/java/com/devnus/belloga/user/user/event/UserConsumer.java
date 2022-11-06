@@ -29,7 +29,22 @@ public class UserConsumer {
     }
 
     /**
-     * 일반 사용자 custom 회원가입시 consume
+     * 관리자 custom 회원가입시 consume
+     * 컨슘 결과를 사가 패턴으로 보낸다.
+     */
+    @KafkaListener(topics = "register-admin", groupId = "register-admin-1", containerFactory = "eventRegisterAdminListener")
+    protected void registerAdmin(EventAccount.RegisterAdmin event) throws IOException {
+        try {
+            if(userService.saveAdmin(event)) {
+                userProducer.sendRegisterAdminSagaResult(event.getAccountId(), true);
+            }
+        } catch (Exception e) {
+            userProducer.sendRegisterAdminSagaResult(event.getAccountId(), false);
+        }
+    }
+
+    /**
+     * 일반 사용자 회원가입시 consume
      * 컨슘 결과를 사가 패턴으로 보낸다.
      */
     @KafkaListener(topics = "register-labeler", groupId = "register-labeler-1", containerFactory = "eventRegisterLabelerListener")

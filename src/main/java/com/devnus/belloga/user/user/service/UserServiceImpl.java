@@ -2,6 +2,7 @@ package com.devnus.belloga.user.user.service;
 
 import com.devnus.belloga.user.common.exception.error.InvalidAccountIdException;
 import com.devnus.belloga.user.common.util.SecurityUtil;
+import com.devnus.belloga.user.user.domain.AdminUser;
 import com.devnus.belloga.user.user.domain.EnterpriseUser;
 import com.devnus.belloga.user.user.domain.LabelerUser;
 import com.devnus.belloga.user.user.domain.User;
@@ -33,6 +34,24 @@ public class UserServiceImpl implements UserService{
                 .email(event.getEmail())
                 .name(event.getName())
                 .organization(event.getOrganization())
+                .phoneNumber(event.getPhoneNumber())
+                .build());
+
+        return true;
+    }
+
+    /**
+     * 관리자 회원가입시 관리자 정보 저장
+     */
+    @Override
+    @Transactional
+    public boolean saveAdmin(EventAccount.RegisterAdmin event) {
+
+        userRepository.save(AdminUser.builder()
+                .id(SecurityUtil.encryptSHA256(event.getAccountId()))
+                .accountId(event.getAccountId())
+                .email(event.getEmail())
+                .name(event.getName())
                 .phoneNumber(event.getPhoneNumber())
                 .build());
 

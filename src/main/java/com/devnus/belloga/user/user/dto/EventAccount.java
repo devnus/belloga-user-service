@@ -22,6 +22,17 @@ public class EventAccount {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class RegisterAdmin {
+        private String accountId;
+        private String email;
+        private String name;
+        private String phoneNumber;
+    }
+
+    @Builder
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class RegisterLabeler {
         private String accountId;
         private String email;
@@ -43,6 +54,15 @@ public class EventAccount {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RegisterLabelerSaga {
+        private String accountId;
+        private boolean isSuccess;
+    }
+
+    @Builder
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RegisterAdminSaga {
         private String accountId;
         private boolean isSuccess;
     }

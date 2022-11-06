@@ -67,4 +67,21 @@ class UserServiceImplTest {
         Assertions.assertThat(result).isEqualTo(true);
     }
 
+    @Test
+    void saveAdminTest() {
+        //given
+        EventAccount.RegisterAdmin event = EventAccount.RegisterAdmin.builder()
+                .phoneNumber("01000001111")
+                .name("sample-admin-name")
+                .email("admin@admin.admin")
+                .accountId("sample-admin-accountId")
+                .build();
+
+        //when
+        boolean result = userService.saveAdmin(event);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(true);
+    }
+
 }

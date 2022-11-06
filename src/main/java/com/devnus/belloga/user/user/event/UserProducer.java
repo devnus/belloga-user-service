@@ -14,6 +14,8 @@ public class UserProducer {
     private String REGISTER_ENTERPRISE_SAGA_TOPIC;
     @Value(value = "${app.topic.account.register-labeler-saga}")
     private String REGISTER_LABELER_SAGA_TOPIC;
+    @Value(value = "${app.topic.account.register-admin-saga}")
+    private String REGISTER_ADMIN_SAGA_TOPIC;
 
     public void sendRegisterEnterpriseSagaResult(String accountId, boolean status) {
         kafkaTemplate.send(REGISTER_ENTERPRISE_SAGA_TOPIC, EventAccount.RegisterEnterpriseSaga.builder()
@@ -23,6 +25,13 @@ public class UserProducer {
     }
     public void sendRegisterLabelerSagaResult(String accountId, boolean status) {
         kafkaTemplate.send(REGISTER_LABELER_SAGA_TOPIC, EventAccount.RegisterLabelerSaga.builder()
+                .accountId(accountId)
+                .isSuccess(status)
+                .build());
+    }
+
+    public void sendRegisterAdminSagaResult(String accountId, boolean status) {
+        kafkaTemplate.send(REGISTER_ADMIN_SAGA_TOPIC, EventAccount.RegisterAdminSaga.builder()
                 .accountId(accountId)
                 .isSuccess(status)
                 .build());
