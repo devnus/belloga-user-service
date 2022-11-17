@@ -87,7 +87,6 @@ class UserControllerTest {
 
                 //then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.response.phoneNumber").value("01000000002"))
                 .andExpect(jsonPath("$.response.email").value("devnus2@devnus.com"))
                 .andExpect(jsonPath("$.response.name").value("devnus2_name"))
                 .andExpect(jsonPath("$.response.birthYear").value("2000"))
@@ -102,14 +101,12 @@ class UserControllerTest {
                                 fieldWithPath("id").description("logging을 위한 api response 고유 ID"),
                                 fieldWithPath("dateTime").description("response time"),
                                 fieldWithPath("success").description("정상 응답 여부"),
-                                fieldWithPath("response.phoneNumber").description("요청한 유저 번호"),
                                 fieldWithPath("response.email").description("요청한 유저 이메일"),
                                 fieldWithPath("response.name").description("요청한 유저 이름"),
                                 fieldWithPath("response.birthYear").description("요청한 유저 출생년도"),
                                 fieldWithPath("error").description("error 발생 시 에러 정보")
                         )
                 ))
-                .andExpect(jsonPath("$.response.phoneNumber", is(notNullValue())))
                 .andExpect(jsonPath("$.response.email", is(notNullValue())))
                 .andExpect(jsonPath("$.response.name", is(notNullValue())))
                 .andExpect(jsonPath("$.response.birthYear", is(notNullValue())));
@@ -166,7 +163,6 @@ class UserControllerTest {
 
                 //then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.response.phoneNumber").value("01000000002"))
                 .andExpect(jsonPath("$.response.email").value("devnus2@devnus.com"))
                 .andExpect(jsonPath("$.response.name").value("devnus2_name"))
                 .andExpect(jsonPath("$.response.birthYear").value("2000"))
@@ -178,14 +174,12 @@ class UserControllerTest {
                                 fieldWithPath("id").description("logging을 위한 api response 고유 ID"),
                                 fieldWithPath("dateTime").description("response time"),
                                 fieldWithPath("success").description("정상 응답 여부"),
-                                fieldWithPath("response.phoneNumber").description("요청한 유저 번호"),
                                 fieldWithPath("response.email").description("요청한 유저 이메일"),
                                 fieldWithPath("response.name").description("요청한 유저 이름"),
                                 fieldWithPath("response.birthYear").description("요청한 유저 출생년도"),
                                 fieldWithPath("error").description("error 발생 시 에러 정보")
                         )
                 ))
-                .andExpect(jsonPath("$.response.phoneNumber", is(notNullValue())))
                 .andExpect(jsonPath("$.response.email", is(notNullValue())))
                 .andExpect(jsonPath("$.response.name", is(notNullValue())))
                 .andExpect(jsonPath("$.response.birthYear", is(notNullValue())));

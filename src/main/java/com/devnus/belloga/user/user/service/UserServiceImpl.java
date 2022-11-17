@@ -70,7 +70,6 @@ public class UserServiceImpl implements UserService{
                 .accountId(event.getAccountId())
                 .email(event.getEmail())
                 .name(event.getName())
-                .phoneNumber(event.getPhoneNumber())
                 .birthYear(event.getBirthYear())
                 .build());
 
@@ -102,7 +101,6 @@ public class UserServiceImpl implements UserService{
         return ResponseUser.LabelerInfo.builder()
                 .email(labelerUser.getEmail())
                 .name(labelerUser.getName())
-                .phoneNumber(labelerUser.getPhoneNumber())
                 .birthYear(labelerUser.getBirthYear())
                 .build();
     }

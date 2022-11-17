@@ -29,7 +29,6 @@ CREATE TABLE admin (
 /* 라벨러 사용자 정보를 저장할 테이블 */
 CREATE TABLE labeler (
     user_id VARCHAR(255) NOT NULL PRIMARY KEY,
-    phone_number VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
     birth_year VARCHAR(255) NOT NULL,

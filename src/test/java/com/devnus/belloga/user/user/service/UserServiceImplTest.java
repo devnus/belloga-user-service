@@ -53,7 +53,6 @@ class UserServiceImplTest {
     void saveLabelerTest() {
         //given
         EventAccount.RegisterLabeler event = EventAccount.RegisterLabeler.builder()
-                .phoneNumber("01000000000")
                 .name("sample-name")
                 .email("sample@sample.sample")
                 .accountId("sample-accountId")

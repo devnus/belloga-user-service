@@ -18,9 +18,6 @@ import javax.persistence.Table;
 @SuperBuilder
 @Getter
 public class LabelerUser extends User {
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "email")
     private String email;
 

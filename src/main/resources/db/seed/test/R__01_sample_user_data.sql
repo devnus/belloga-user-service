@@ -4,4 +4,4 @@ INSERT INTO enterprise(user_id, phone_number, organization, email, name) VALUES(
 
 /* 일반 사용자 추가 */
 INSERT INTO users(user_id, account_id, dtype) VALUES('labeler-user-id', 'labeler-account-id', 'labeler');
-INSERT INTO labeler(user_id, phone_number, birth_year, email, name) VALUES('labeler-user-id','01000000002', '2000', 'devnus2@devnus.com', 'devnus2_name');
+INSERT INTO labeler(user_id, birth_year, email, name) VALUES('labeler-user-id', '2000', 'devnus2@devnus.com', 'devnus2_name');

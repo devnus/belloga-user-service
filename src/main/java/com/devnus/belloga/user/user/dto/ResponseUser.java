@@ -11,7 +11,6 @@ public class ResponseUser {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class LabelerInfo {
-        private String phoneNumber;
         private String email;
         private String name;
         private String birthYear;
